@@ -19,7 +19,7 @@ public class CameraFollow : MonoBehaviour
 
 
     [System.Serializable]
-    struct Bounds
+    struct CameraBounds
     {      
         public float top;
         public float right;
@@ -28,7 +28,7 @@ public class CameraFollow : MonoBehaviour
     }
 
     [SerializeField]
-    Bounds boundaries;
+    CameraBounds boundaries;
 
     private void Start()
     {
