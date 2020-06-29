@@ -39,7 +39,7 @@ public class RockSpawner : MonoBehaviour
             nextSpawnTime -= Time.deltaTime;
         }
     }
-
+    //this could use a pool, but the spawn ratio is too low
     public void SpawnRock()
     {
         float angle = Random.Range(minThrowAngle, maxThrowAngle)*Mathf.Deg2Rad;

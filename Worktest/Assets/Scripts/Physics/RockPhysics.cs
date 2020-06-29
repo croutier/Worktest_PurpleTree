@@ -98,18 +98,45 @@ public class RockPhysics : MonoBehaviour
     {
         moveVector.y = moveVector.y * -box.verticalBounciness;
         moveVector.x = moveVector.x * box.horizontalBounciness;
-        float nexBounce = GetNexBouncingSpot();
-        indicator.SetActive(true);
-        indicator.transform.position = new Vector2(transform.position.x + nexBounce, indicator.transform.position.y);
-    }
+        float nextBounce = GetNextBouncingSpot();
+        if(transform.position.x + nextBounce > goal.transform.position.x - 1)
+        {
+            indicator.SetActive(false);
+            AutoAim();
+        }
+        else
+        {
+            indicator.SetActive(true);
+            indicator.transform.position = new Vector2(transform.position.x + nextBounce, indicator.transform.position.y);
+        }
+    }   
 
     //asuming that the current pos in y is equal to where it has to bounce again and that the moveVector y is going upwards
-    public float GetNexBouncingSpot()
+    public float GetNextBouncingSpot()
     {
         float initialSpeed = moveVector.y;
         //time = speed/acceleration*2 because of its constant acceleration
         float time = (initialSpeed / (gravity))*2;        
         //so the x distansce = time * moveVector.x because it didnt have acceleration
         return time * moveVector.x;
+    }
+    private void AutoAim()
+    {
+        float initialSpeed = moveVector.y;
+        //same as in next bounce
+        float goingUpTime = (initialSpeed / (gravity));
+        //get max hight using promedy velocity
+        float maxY = transform.position.y +((initialSpeed/2) * goingUpTime);
+        if(maxY < goal.transform.position.y + 0.5f)
+        {
+            maxY = goal.transform.position.y + 0.5f;
+            float yDif = maxY - transform.position.y;
+            goingUpTime = Mathf.Sqrt(yDif/  (gravity/2));
+            initialSpeed = gravity * goingUpTime;
+        }
+        float goingDownTime = Mathf.Sqrt((maxY - goal.transform.position.y) / (gravity / 2));
+        float totalTime = goingDownTime + goingUpTime;
+        float xDistance = goal.transform.position.x - transform.position.x;        
+        moveVector = new Vector2(xDistance / totalTime, initialSpeed);
     }
 }
