@@ -17,15 +17,30 @@ public class RockPhysics : MonoBehaviour
     private void Start()
     {
         physics = CustomPhysics.Instance;
-        //moveVector = new Vector2(0,-1);
+        moveVector = new Vector2(1,-1);
     }
 
     // Update is called once per frame
     void Update()
     {
+        bool gointUp = false;
+        if (moveVector.y > 0)
+        {
+            gointUp = true;
+            if (moveVector.y < 0)
+            {
+                print(transform.position.y);
+            }
+        }
         if (move)
         {
-            moveVector += gravity/100 * Vector2.down;
+
+            moveVector += gravity / 100 * Vector2.down;
+            
+            if (moveVector.y < 0 && gointUp)
+            {
+                print(transform.position.y);
+            }
             CheckCollisions();
             transform.position = transform.position + (new Vector3(moveVector.x, moveVector.y, 0) * Time.deltaTime);
         }        
@@ -50,8 +65,7 @@ public class RockPhysics : MonoBehaviour
         if(horizontalCollision!= null)
         {
             Debug.Log("horizontal collision with " + horizontalCollision.gameObject.name);
-            moveVector.x = moveVector.x*-1;
-            moveVector *= 0.3f;
+            moveVector.x = moveVector.x*-1f;            
             if(moveVector.magnitude< minSpeed)
             {
                 move = false;
@@ -59,13 +73,21 @@ public class RockPhysics : MonoBehaviour
         }
         if (verticalCollision != null)
         {
-            moveVector.y = moveVector.y * -1;
-            Debug.Log("vertical collision with " + verticalCollision.gameObject.name);
-            moveVector *= 0.3f; 
-            if (moveVector.magnitude < minSpeed)
+            if(verticalCollision.TryGetComponent(out BouncingBox box))
             {
-                move = false;
+                moveVector.y = moveVector.y * -box.verticalBounciness;
+                moveVector.x = moveVector.x * box.horizontalBounciness;
             }
+            else
+            {
+                moveVector.y = moveVector.y * -1;
+                Debug.Log("vertical collision with " + verticalCollision.gameObject.name);
+                moveVector *= 0.3f;
+                if (moveVector.magnitude < minSpeed)
+                {
+                    move = false;
+                }
+            }            
         }
     }
 }
