@@ -107,7 +107,7 @@ public class HeroMovementController : MonoBehaviour
 
     private void SpawnDust(int direction)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     private void DetectTouch()
@@ -135,8 +135,7 @@ public class HeroMovementController : MonoBehaviour
     {
         if (currentSpeed != 0)
         {
-            anim.speed = Math.Abs(currentSpeed)/ topSpeed;
-            Debug.Log(currentSpeed);
+            anim.speed = Mathf.Clamp(Math.Abs(currentSpeed)/ topSpeed,0.2f,1);
             transform.position = new Vector3(transform.position.x + currentSpeed * Time.deltaTime, transform.position.y, transform.position.z);
             transform.position = new Vector3
                (

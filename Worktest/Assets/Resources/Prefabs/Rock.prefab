@@ -121,4 +121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: 9.8
+  indicatorPrefab: {fileID: 1028907204910758362, guid: f143339e2d23cf24eac22ff16d358dc5,
+    type: 3}
   move: 1
