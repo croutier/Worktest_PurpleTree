@@ -7,6 +7,8 @@ public class RockSpawner : MonoBehaviour
     [SerializeField]
     GameObject rockPrefab;
     [SerializeField]
+    Transform rockSpawPoint;
+    [SerializeField]
     GameObject goal;
 
     public float minThrowAngle = 30.0f;    
@@ -27,12 +29,25 @@ public class RockSpawner : MonoBehaviour
 
     private void Update()
     {
-        
+        if(nextSpawnTime<= 0)
+        {
+            anim.SetTrigger("Throw");
+            nextSpawnTime = Random.Range(minTimeBetweenSpawns, maxTimeBetweenSpawns);
+        }
+        else
+        {
+            nextSpawnTime -= Time.deltaTime;
+        }
     }
 
     public void SpawnRock()
     {
-
+        float angle = Random.Range(minThrowAngle, maxThrowAngle)*Mathf.Deg2Rad;
+        float strength = Random.Range(minStrength, maxStrength);
+        //trigonometry, cos*hyp = adj = x , sen * hyp = opp = y
+        Vector2 throwVector = new Vector2(Mathf.Cos(angle) * strength, Mathf.Sin(angle) * strength);
+        GameObject rock = Instantiate(rockPrefab, rockSpawPoint.position, new Quaternion());
+        rock.GetComponent<RockPhysics>().Spawn(throwVector, goal);
     }
     
 }
