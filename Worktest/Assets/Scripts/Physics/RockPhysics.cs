@@ -7,6 +7,7 @@ public class RockPhysics : MonoBehaviour
 {
     [SerializeField]
     float gravity = 9.8f;
+    public float Gravity { get { return gravity; } }
     [SerializeField]
     GameObject indicatorPrefab;
     
@@ -25,11 +26,13 @@ public class RockPhysics : MonoBehaviour
         physics = CustomPhysics.Instance;
     }
 
-    public void Throw(Vector3 spawnPos , Vector2 mov)
+    public void Throw(Vector3 spawnPos , Vector2 mov, float landingX)
     {
         transform.position = spawnPos;
         move = true;
         moveVector = mov;
+        indicator.SetActive(true);
+        indicator.transform.position = new Vector2(landingX, indicator.transform.position.y);
     }
 
     // Update is called once per frame

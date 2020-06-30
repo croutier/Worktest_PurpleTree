@@ -12,8 +12,15 @@ public class RockSpawner : MonoBehaviour
     [SerializeField]
     GameObject goal;
 
+    [SerializeField]
+    BoxCollider2D bounceBoxCol;
+    [SerializeField]
+    bool DrawHint = true;
+
     List<GameObject> rockPool;
     int poolSize = 5;
+
+    float bounceBoxTopY = 0.0f;
 
     public float minThrowAngle = 30.0f;    
     public float maxThrowAngle = 50.0f;
@@ -22,12 +29,13 @@ public class RockSpawner : MonoBehaviour
     public float minTimeBetweenSpawns = 5;
     public float maxTimeBetweenSpawns = 15;
 
-    float nextSpawnTime = 3.0f;
+    float nextSpawnTime = 2.0f;
 
     Animator anim;
     private void Start()
     {
         anim = GetComponent<Animator>();
+        bounceBoxTopY = bounceBoxCol.bounds.center.y + bounceBoxCol.bounds.size.y / 2;
         GeneratePool();
     }
 
@@ -77,8 +85,50 @@ public class RockSpawner : MonoBehaviour
         float angle = UnityEngine.Random.Range(minThrowAngle, maxThrowAngle)*Mathf.Deg2Rad;
         float strength = UnityEngine.Random.Range(minStrength, maxStrength);
         //trigonometry, cos*hyp = adj = x , sen * hyp = opp = y
-        Vector2 throwVector = new Vector2(Mathf.Cos(angle) * strength, Mathf.Sin(angle) * strength);        
-        GetARock().Throw(rockSpawPoint.position,throwVector);
+        Vector2 throwVector = new Vector2(Mathf.Cos(angle) * strength, Mathf.Sin(angle) * strength);
+        RockPhysics rock = GetARock();
+        float landingX = PredictLandingX(throwVector, rock.Gravity);
+        rock.Throw(rockSpawPoint.position,throwVector, landingX);
     }
-    
+
+    private float PredictLandingX(Vector2 throwVector, float gravity)
+    {
+        float landing = rockSpawPoint.position.x;
+
+        float initialSpeed = throwVector.y;        
+        float goingUpTime = (initialSpeed / (gravity));
+        float maxY = rockSpawPoint.position.y + ((initialSpeed / 2) * goingUpTime);
+        float goingDownTime = Mathf.Sqrt((maxY - bounceBoxTopY) / (gravity / 2));
+        float totalTime = goingDownTime + goingUpTime;
+        landing += throwVector.x*totalTime;
+        return landing;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (DrawHint)
+        {
+            float realisticScale = 0.5f;
+
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(rockSpawPoint.position, rockSpawPoint.position + new Vector3(Mathf.Cos(minThrowAngle * Mathf.Deg2Rad), Mathf.Sin(minThrowAngle * Mathf.Deg2Rad), 0) * maxStrength * realisticScale);
+            Gizmos.DrawLine(rockSpawPoint.position, rockSpawPoint.position + new Vector3(Mathf.Cos(maxThrowAngle * Mathf.Deg2Rad), Mathf.Sin(maxThrowAngle * Mathf.Deg2Rad), 0) * maxStrength * realisticScale);
+
+            // -5 , 0
+            bounceBoxTopY = bounceBoxCol.bounds.center.y + bounceBoxCol.bounds.size.y / 2;
+            float minLandX = PredictLandingX(new Vector2(Mathf.Cos(minThrowAngle * Mathf.Deg2Rad), Mathf.Sin(minThrowAngle * Mathf.Deg2Rad)) * minStrength, rockPrefab.GetComponent<RockPhysics>().Gravity);
+            float maxLandX = PredictLandingX(new Vector2(Mathf.Cos(maxThrowAngle * Mathf.Deg2Rad), Mathf.Sin(maxThrowAngle * Mathf.Deg2Rad)) * maxStrength, rockPrefab.GetComponent<RockPhysics>().Gravity);
+            Gizmos.color = Color.green;
+
+            Gizmos.DrawLine(new Vector2(minLandX, -5), new Vector2(minLandX, 0));
+            Gizmos.DrawLine(new Vector2(maxLandX, -5), new Vector2(maxLandX, 0));
+
+            for (int i = 0; i < 10; i++)
+            {
+
+            }
+        }    
+    }
+
+
 }

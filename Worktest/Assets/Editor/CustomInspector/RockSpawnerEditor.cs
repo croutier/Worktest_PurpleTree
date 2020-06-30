@@ -23,7 +23,7 @@ public class RockSpawnerEditor : Editor
         EditorGUILayout.LabelField("Strength", style: customGUIStyle);
         EditorGUILayout.LabelField("Min:", myScript.minStrength.ToString("#.#"));
         EditorGUILayout.LabelField("Max:", myScript.maxStrength.ToString("#.#"));
-        EditorGUILayout.MinMaxSlider(ref myScript.minStrength, ref myScript.maxStrength, 1, 10);
+        EditorGUILayout.MinMaxSlider(ref myScript.minStrength, ref myScript.maxStrength, 1, 20);
 
         EditorGUILayout.LabelField("Time between spawns", style: customGUIStyle);
         EditorGUILayout.LabelField("Min:", myScript.minTimeBetweenSpawns.ToString("#.#") +" s");

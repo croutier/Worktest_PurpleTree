@@ -632,6 +632,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315225142}
   m_CullTransparentMesh: 0
+--- !u!1 &480988693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 480988695}
+  - component: {fileID: 480988694}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &480988694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480988693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a04f50abfc5eb94a9c6ba1b5f7127f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoring: {fileID: 1416141844}
+--- !u!4 &480988695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480988693}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.506905, y: -0.23902401, z: -2.90625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &486642644
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,12 +795,12 @@ MonoBehaviour:
     type: 3}
   rockSpawPoint: {fileID: 1529188655}
   goal: {fileID: 1416141840}
-  minThrowAngle: 41.41525
-  maxThrowAngle: 63.891678
-  minStrength: 4.4708176
-  maxStrength: 7.530074
-  minTimeBetweenSpawns: 1.978903
-  maxTimeBetweenSpawns: 7.3628693
+  minThrowAngle: 35.09946
+  maxThrowAngle: 42.01198
+  minStrength: 6.940745
+  maxStrength: 10
+  minTimeBetweenSpawns: 1
+  maxTimeBetweenSpawns: 2.5681767
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2080,6 +2124,7 @@ GameObject:
   - component: {fileID: 1416141841}
   - component: {fileID: 1416141842}
   - component: {fileID: 1416141843}
+  - component: {fileID: 1416141844}
   m_Layer: 0
   m_Name: ScoringZone
   m_TagString: Untagged
@@ -2114,7 +2159,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.15}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2125,7 +2170,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.56, y: 0.15}
+  m_Size: {x: 0.56, y: 0.45}
   m_EdgeRadius: 0
 --- !u!114 &1416141843
 MonoBehaviour:
@@ -2141,6 +2186,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colision: {fileID: 1416141842}
   collisionID: Goal
+--- !u!114 &1416141844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416141840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725f3b9b76e3ca14dbadefb0e8903066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1487660141
 GameObject:
   m_ObjectHideFlags: 0
