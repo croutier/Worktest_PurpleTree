@@ -17,17 +17,20 @@ public class RockSpawner : MonoBehaviour
     [SerializeField]
     bool DrawHint = true;
 
+
+    public Difficulty difficultySetting;
+
     List<GameObject> rockPool;
     int poolSize = 5;
 
     float bounceBoxTopY = 0.0f;
 
-    public float minThrowAngle = 30.0f;    
-    public float maxThrowAngle = 50.0f;
-    public float minStrength = 1;
-    public float maxStrength = 8;
-    public float minTimeBetweenSpawns = 5;
-    public float maxTimeBetweenSpawns = 15;
+    public float[] minThrowAngle = new float[]{0, 0,0};    
+    public float[] maxThrowAngle = new float[] { 0, 0, 0 };
+    public float[] minStrength = new float[] { 0, 0, 0 };
+    public float[] maxStrength = new float[] { 0, 0, 0 };
+    public float[] minTimeBetweenSpawns = new float[] { 0, 0, 0 };
+    public float[] maxTimeBetweenSpawns = new float[] { 0, 0, 0 };
 
     float nextSpawnTime = 2.0f;
 
@@ -72,7 +75,7 @@ public class RockSpawner : MonoBehaviour
         if(nextSpawnTime<= 0)
         {
             anim.SetTrigger("Throw");
-            nextSpawnTime = UnityEngine.Random.Range(minTimeBetweenSpawns, maxTimeBetweenSpawns);
+            nextSpawnTime = UnityEngine.Random.Range(minTimeBetweenSpawns[(int)GameManager.CurrentDificiulty], maxTimeBetweenSpawns[(int)GameManager.CurrentDificiulty]);
         }
         else
         {
@@ -82,8 +85,8 @@ public class RockSpawner : MonoBehaviour
     //this could use a pool, but the spawn ratio is too low
     public void SpawnRock()
     {
-        float angle = UnityEngine.Random.Range(minThrowAngle, maxThrowAngle)*Mathf.Deg2Rad;
-        float strength = UnityEngine.Random.Range(minStrength, maxStrength);
+        float angle = UnityEngine.Random.Range(minThrowAngle[(int)GameManager.CurrentDificiulty], maxThrowAngle[(int)GameManager.CurrentDificiulty]) *Mathf.Deg2Rad;
+        float strength = UnityEngine.Random.Range(minStrength[(int)GameManager.CurrentDificiulty], maxStrength[(int)GameManager.CurrentDificiulty]);
         //trigonometry, cos*hyp = adj = x , sen * hyp = opp = y
         Vector2 throwVector = new Vector2(Mathf.Cos(angle) * strength, Mathf.Sin(angle) * strength);
         RockPhysics rock = GetARock();
@@ -111,27 +114,25 @@ public class RockSpawner : MonoBehaviour
             float realisticScale = 0.5f;
 
             Gizmos.color = Color.blue;
-            Gizmos.DrawLine(rockSpawPoint.position, rockSpawPoint.position + new Vector3(Mathf.Cos(minThrowAngle * Mathf.Deg2Rad), Mathf.Sin(minThrowAngle * Mathf.Deg2Rad), 0) * maxStrength * realisticScale);
-            Gizmos.DrawLine(rockSpawPoint.position, rockSpawPoint.position + new Vector3(Mathf.Cos(maxThrowAngle * Mathf.Deg2Rad), Mathf.Sin(maxThrowAngle * Mathf.Deg2Rad), 0) * maxStrength * realisticScale);
+            Gizmos.DrawLine(rockSpawPoint.position, rockSpawPoint.position + new Vector3(Mathf.Cos(minThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad), Mathf.Sin(minThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad), 0) * maxStrength[(int)difficultySetting] * realisticScale);
+            Gizmos.DrawLine(rockSpawPoint.position, rockSpawPoint.position + new Vector3(Mathf.Cos(maxThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad), Mathf.Sin(maxThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad), 0) * maxStrength[(int)difficultySetting] * realisticScale);
 
             // -5 , 0
             bounceBoxTopY = bounceBoxCol.bounds.center.y + bounceBoxCol.bounds.size.y / 2;
             float gravity = rockPrefab.GetComponent<RockPhysics>().Gravity;
-            float minLandX = PredictLandingX(new Vector2(Mathf.Cos(minThrowAngle * Mathf.Deg2Rad), Mathf.Sin(minThrowAngle * Mathf.Deg2Rad)) * minStrength, gravity);
-            float maxLandX = PredictLandingX(new Vector2(Mathf.Cos(maxThrowAngle * Mathf.Deg2Rad), Mathf.Sin(maxThrowAngle * Mathf.Deg2Rad)) * maxStrength, gravity);
+            float minLandX = PredictLandingX(new Vector2(Mathf.Cos(minThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad), Mathf.Sin(minThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad)) * minStrength[(int)difficultySetting], gravity);
+            float maxLandX = PredictLandingX(new Vector2(Mathf.Cos(maxThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad), Mathf.Sin(maxThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad)) * maxStrength[(int)difficultySetting], gravity);
             Gizmos.color = Color.green;
 
             Gizmos.DrawLine(new Vector2(minLandX, -5), new Vector2(minLandX, 0));
             Gizmos.DrawLine(new Vector2(maxLandX, -5), new Vector2(maxLandX, 0));
 
             Vector2 lastPos = rockSpawPoint.position;
-            Vector2 promedyVector = new Vector2(Mathf.Cos((minThrowAngle + ((maxThrowAngle - minThrowAngle) / 2)) * Mathf.Deg2Rad), Mathf.Sin((minThrowAngle + ((maxThrowAngle - minThrowAngle) / 2)) * Mathf.Deg2Rad)) * (minStrength + ((maxStrength - minStrength) / 2));
+            Vector2 promedyVector = new Vector2(Mathf.Cos((minThrowAngle[(int)difficultySetting] + ((maxThrowAngle[(int)difficultySetting] - minThrowAngle[(int)difficultySetting]) / 2)) * Mathf.Deg2Rad), Mathf.Sin((minThrowAngle[(int)difficultySetting] + ((maxThrowAngle[(int)difficultySetting] - minThrowAngle[(int)difficultySetting]) / 2)) * Mathf.Deg2Rad)) * (minStrength[(int)difficultySetting] + ((maxStrength[(int)difficultySetting] - minStrength[(int)difficultySetting]) / 2));
             float goingUpTime = (promedyVector.y / (gravity));            
             float maxY = lastPos.y + ((promedyVector.y / 2) * goingUpTime);
-            print(maxY);
+
             float goingDownTime = Mathf.Sqrt((maxY - -4.5f) / (gravity / 2));
-            print(goingDownTime);
-            print((maxY - -4.5f));
             float totalTime = goingUpTime + goingDownTime;            
             for (int i = 0; i < 10; i++)
             {
