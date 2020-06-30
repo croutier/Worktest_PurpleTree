@@ -9,20 +9,27 @@ public class RockPhysics : MonoBehaviour
     float gravity = 9.8f;
     [SerializeField]
     GameObject indicatorPrefab;
-
+    
     GameObject indicator;
     GameObject goal;
     Vector2 moveVector;
     float minSpeed = 0.1f;
     public bool move = true;
     CustomPhysics physics;
-        
-    public void Spawn(Vector2 mov, GameObject goal)
+
+    
+    public void Spawn(GameObject goal)
     {
-        physics = CustomPhysics.Instance;
+        this.goal = goal; 
         indicator = Instantiate(indicatorPrefab);
+        physics = CustomPhysics.Instance;
+    }
+
+    public void Throw(Vector3 spawnPos , Vector2 mov)
+    {
+        transform.position = spawnPos;
+        move = true;
         moveVector = mov;
-        this.goal = goal;
     }
 
     // Update is called once per frame
@@ -81,17 +88,30 @@ public class RockPhysics : MonoBehaviour
             {
                 BouncingOnTheBox(box);                
             }
-            else
+            else if(verticalCollision.TryGetComponent(out ScoringZone scoreZone))
+            {
+                scoreZone.ScorePoint();
+                move = false;
+                Deactivate();
+            }
+            else            
             {
                 moveVector.y = moveVector.y * -1;
                 //Debug.Log("vertical collision with " + verticalCollision.gameObject.name);
                 moveVector *= 0.3f;
-                if (moveVector.magnitude < minSpeed)
-                {
-                    move = false;
-                }
-            }            
-        }
+                indicator.SetActive(false);
+                if (moveVector.magnitude < minSpeed)                                                                         
+                {                                                                                                            
+                    move = false;                                                                                            
+                    Deactivate();  
+                }                                                                                                            
+            }                                                                                                                
+        }                                                                                                                    
+    }
+    private void Deactivate()                                                                                                
+    {
+        gameObject.SetActive(false);
+        indicator.SetActive(false);
     }
 
     private void BouncingOnTheBox(BouncingBox box)
