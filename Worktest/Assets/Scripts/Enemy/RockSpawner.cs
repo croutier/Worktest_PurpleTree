@@ -116,16 +116,29 @@ public class RockSpawner : MonoBehaviour
 
             // -5 , 0
             bounceBoxTopY = bounceBoxCol.bounds.center.y + bounceBoxCol.bounds.size.y / 2;
-            float minLandX = PredictLandingX(new Vector2(Mathf.Cos(minThrowAngle * Mathf.Deg2Rad), Mathf.Sin(minThrowAngle * Mathf.Deg2Rad)) * minStrength, rockPrefab.GetComponent<RockPhysics>().Gravity);
-            float maxLandX = PredictLandingX(new Vector2(Mathf.Cos(maxThrowAngle * Mathf.Deg2Rad), Mathf.Sin(maxThrowAngle * Mathf.Deg2Rad)) * maxStrength, rockPrefab.GetComponent<RockPhysics>().Gravity);
+            float gravity = rockPrefab.GetComponent<RockPhysics>().Gravity;
+            float minLandX = PredictLandingX(new Vector2(Mathf.Cos(minThrowAngle * Mathf.Deg2Rad), Mathf.Sin(minThrowAngle * Mathf.Deg2Rad)) * minStrength, gravity);
+            float maxLandX = PredictLandingX(new Vector2(Mathf.Cos(maxThrowAngle * Mathf.Deg2Rad), Mathf.Sin(maxThrowAngle * Mathf.Deg2Rad)) * maxStrength, gravity);
             Gizmos.color = Color.green;
 
             Gizmos.DrawLine(new Vector2(minLandX, -5), new Vector2(minLandX, 0));
             Gizmos.DrawLine(new Vector2(maxLandX, -5), new Vector2(maxLandX, 0));
 
+            Vector2 lastPos = rockSpawPoint.position;
+            Vector2 promedyVector = new Vector2(Mathf.Cos((minThrowAngle + ((maxThrowAngle - minThrowAngle) / 2)) * Mathf.Deg2Rad), Mathf.Sin((minThrowAngle + ((maxThrowAngle - minThrowAngle) / 2)) * Mathf.Deg2Rad)) * (minStrength + ((maxStrength - minStrength) / 2));
+            float goingUpTime = (promedyVector.y / (gravity));            
+            float maxY = lastPos.y + ((promedyVector.y / 2) * goingUpTime);
+            print(maxY);
+            float goingDownTime = Mathf.Sqrt((maxY - -4.5f) / (gravity / 2));
+            print(goingDownTime);
+            print((maxY - -4.5f));
+            float totalTime = goingUpTime + goingDownTime;            
             for (int i = 0; i < 10; i++)
             {
-
+                float currentTime = (totalTime / 10) * (i+1);
+                Vector2 currentPos = new Vector2(rockSpawPoint.position.x + promedyVector.x* currentTime, rockSpawPoint.position.y + (promedyVector.y * currentTime - (gravity/2 * Mathf.Pow(currentTime,2))));
+                Gizmos.DrawLine(lastPos, currentPos);  
+                lastPos = currentPos;
             }
         }    
     }
