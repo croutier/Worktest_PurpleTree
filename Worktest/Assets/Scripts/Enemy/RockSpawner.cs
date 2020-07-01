@@ -21,6 +21,7 @@ public class RockSpawner : MonoBehaviour
 
     public Difficulty difficultySetting;
 
+    GameObject rockContainer;
     List<GameObject> rockPool;
     int poolSize = 5;
 
@@ -59,11 +60,14 @@ public class RockSpawner : MonoBehaviour
 
     private void GeneratePool()
     {
+        rockContainer = new GameObject();
+        rockContainer.name = "RockContainer";
         rockPool = new List<GameObject>();
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject rock = Instantiate(rockPrefab);
-            rock.GetComponent<RockPhysics>().Spawn(goal);
+            GameObject rock = Instantiate(rockPrefab, rockContainer.transform);
+            rock.SetActive(false);
+            rock.GetComponent<RockPhysics>().Spawn(goal, rockContainer.transform);
             rockPool.Add(rock);
         }
     }
@@ -78,8 +82,8 @@ public class RockSpawner : MonoBehaviour
                 return rock.GetComponent<RockPhysics>();
             }
         }
-        GameObject newRock = Instantiate(rockPrefab);
-        newRock.GetComponent<RockPhysics>().Spawn(goal);        
+        GameObject newRock = Instantiate(rockPrefab, rockContainer.transform);
+        newRock.GetComponent<RockPhysics>().Spawn(goal, rockContainer.transform);        
         rockPool.Add(newRock);
         newRock.SetActive(true);
         return newRock.GetComponent<RockPhysics>();
@@ -123,8 +127,8 @@ public class RockSpawner : MonoBehaviour
             // -5 , 0
             bounceBoxTopY = bounceBoxCol.bounds.center.y + bounceBoxCol.bounds.size.y / 2;
             float gravity = rockPrefab.GetComponent<RockPhysics>().Gravity;
-            float minLandX = PredictLandingX(new Vector2(Mathf.Cos(minThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad), Mathf.Sin(minThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad)) * minStrength[(int)difficultySetting], gravity);
-            float maxLandX = PredictLandingX(new Vector2(Mathf.Cos(maxThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad), Mathf.Sin(maxThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad)) * maxStrength[(int)difficultySetting], gravity);
+            float minLandX = PredictLandingX(new Vector2(Mathf.Cos(minThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad), Mathf.Sin(minThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad)) * maxStrength[(int)difficultySetting], gravity);
+            float maxLandX = PredictLandingX(new Vector2(Mathf.Cos(maxThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad), Mathf.Sin(maxThrowAngle[(int)difficultySetting] * Mathf.Deg2Rad)) * minStrength[(int)difficultySetting], gravity);
             Gizmos.color = Color.green;
 
             Gizmos.DrawLine(new Vector2(minLandX, -5), new Vector2(minLandX, 0));

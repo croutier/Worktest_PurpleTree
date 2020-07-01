@@ -9,4 +9,5 @@ public class LevelConfigs : MonoBehaviour
     public float[] levelDuration = new float[] { 0, 0, 0 };
     public float[] rocksToSpawnCoin = new float[] { 0, 0, 0 };
     public float[] coinLifespan = new float[] { 0, 0, 0 };
+    public float[] coinMinDistanceToHero = new float[] { 0, 0, 0 };
 }

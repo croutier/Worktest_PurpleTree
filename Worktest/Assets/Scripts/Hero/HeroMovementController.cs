@@ -24,7 +24,9 @@ public class HeroMovementController : MonoBehaviour
     [SerializeField]
     float moveLimitOffset = 2.0f;
     float rightLimit = 0.0f;
+    public float RightLimit { get { return rightLimit; } }
     float leftLimit = 0.0f;
+    public float LeftLimit { get { return leftLimit; } }
     MoveState currentMoveState = MoveState.idle;
 
     Animator anim;

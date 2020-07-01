@@ -19,10 +19,11 @@ public class RockPhysics : MonoBehaviour
     CustomPhysics physics;
 
     
-    public void Spawn(GameObject goal)
+    public void Spawn(GameObject goal, Transform parent)
     {
         this.goal = goal; 
-        indicator = Instantiate(indicatorPrefab);
+        indicator = Instantiate(indicatorPrefab,parent);
+        indicator.SetActive(false);
         physics = CustomPhysics.Instance;
     }
 
