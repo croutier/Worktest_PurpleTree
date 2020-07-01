@@ -1,43 +1,45 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Difficulty
-{
-    Easy,
-    Medim,
-    Hard
-}
 
+[RequireComponent(typeof(LevelConfigs))]
 public class GameManager : MonoBehaviour
-{
-    public static Difficulty CurrentDificiulty;
+{    
     [SerializeField]
-    Difficulty difficulty = Difficulty.Medim;
-    [SerializeField]
-    ScoringZone scoring;
+    ScoringZone scoringZone;
     [SerializeField]
     GameObject coinPrefab;
 
+    LevelConfigs configs;
 
+
+    List<GameObject> coinPool;
+    [SerializeField]
+    int coinPoolLength;
+
+    float curentTime = 99f;
     int rockScore = 0;
-    int coin = 0;
-
-    private void Awake()
-    {
-        CurrentDificiulty = difficulty;
-    }
+    int coinScore = 0;
+    
     private void Start()
     {
-        scoring.Score += RockScore;
-    }
-    
-    public void ChangeDifficulty(Difficulty newDificulty)
-    {
-        CurrentDificiulty = newDificulty;
+        configs = GetComponent<LevelConfigs>();
+        scoringZone.Score += RockScore;
+        curentTime = configs.levelDuration[LevelDifficulty.Instance.Difficulty];
+        StartCoinPool();
     }
 
+    private void StartCoinPool()
+    {
+        throw new NotImplementedException();
+    }
+    private void CoinScore()
+    {
+
+    }
     private void RockScore()
     {
         Debug.Log("POINTO!!");
@@ -45,6 +47,6 @@ public class GameManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        scoring.Score -= RockScore;
+        scoringZone.Score -= RockScore;
     }
 }

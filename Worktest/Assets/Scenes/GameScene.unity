@@ -153,7 +153,7 @@ Transform:
   - {fileID: 164394247}
   - {fileID: 1024792003}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &162221021
 MonoBehaviour:
@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 243943804}
   - component: {fileID: 243943805}
   m_Layer: 0
-  m_Name: hydrant1
+  m_Name: Hydrant1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -642,6 +642,7 @@ GameObject:
   m_Component:
   - component: {fileID: 480988695}
   - component: {fileID: 480988694}
+  - component: {fileID: 480988696}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -661,9 +662,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a04f50abfc5eb94a9c6ba1b5f7127f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 1
-  scoring: {fileID: 1416141844}
-  coinPrefab: {fileID: 0}
+  scoringZone: {fileID: 0}
+  coinPrefab: {fileID: 2389734609678816732, guid: 786102ba16b62304fa36fc83c467782c,
+    type: 3}
+  coinPoolLength: 0
 --- !u!4 &480988695
 Transform:
   m_ObjectHideFlags: 0
@@ -676,8 +678,33 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &480988696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480988693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1489a57acdcbcff4d9fd5d7d2b5d0375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficultySetting: 1
+  levelDuration:
+  - 30
+  - 40
+  - 50
+  rocksToSpawnCoin:
+  - 2
+  - 3
+  - 4
+  coinLifespan:
+  - 10
+  - 8
+  - 5
 --- !u!1 &486642644
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,12 +732,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486642644}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.61, z: 0}
+  m_LocalPosition: {x: -11.52, y: -1.4499999, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 1529188655}
-  m_Father: {fileID: 2140273520}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &486642646
 Animator:
@@ -799,7 +826,7 @@ MonoBehaviour:
   goal: {fileID: 1416141840}
   bounceBoxCol: {fileID: 1024792005}
   DrawHint: 1
-  settingDifficlty: 0
+  difficultySetting: 1
   minThrowAngle:
   - 54.226307
   - 60.957443
@@ -926,7 +953,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &590893677
 GameObject:
@@ -992,7 +1019,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &716615400
 GameObject:
@@ -1541,7 +1568,7 @@ Transform:
   m_Children:
   - {fileID: 1416141841}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &982708361
 GameObject:
@@ -1843,7 +1870,7 @@ RectTransform:
   - {fileID: 2047719171}
   - {fileID: 1342716211}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1997,7 +2024,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1144295417}
   m_Layer: 0
-  m_Name: hydrants
+  m_Name: Hydrants
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2030,7 +2057,7 @@ GameObject:
   - component: {fileID: 1191678542}
   - component: {fileID: 1191678543}
   m_Layer: 0
-  m_Name: hydrant2
+  m_Name: Hydrant2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2294,6 +2321,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487660141}
   m_CullTransparentMesh: 0
+--- !u!1 &1520087676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1520087678}
+  - component: {fileID: 1520087677}
+  m_Layer: 0
+  m_Name: DifficultySettings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1520087677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520087676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a690fff029b66be4cb32f83d4a22abfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficulty: 0
+--- !u!4 &1520087678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520087676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.500107, y: -0.2126053, z: -158.3846}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1529188654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2394,7 +2465,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1584808414
 GameObject:
@@ -2511,8 +2582,9 @@ Transform:
   - {fileID: 1144295417}
   - {fileID: 982708362}
   - {fileID: 1584808415}
+  - {fileID: 2140273520}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2047719170
 GameObject:
@@ -2561,8 +2633,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2140273520}
   - component: {fileID: 2140273519}
-  - component: {fileID: 2140273518}
-  - component: {fileID: 2140273521}
   m_Layer: 0
   m_Name: Hydrant_Enemy
   m_TagString: Untagged
@@ -2570,32 +2640,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &2140273518
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140273517}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.2}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.12, y: 2.56}
-    newSize: {x: 2.12, y: 2.56}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.59, y: 2.28}
-  m_EdgeRadius: 0
 --- !u!212 &2140273519
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2652,25 +2696,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140273517}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -11.52, y: -3.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 486642645}
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Children: []
+  m_Father: {fileID: 2017173603}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2140273521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140273517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c4cc84fcd7ed474698bd53d59374130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colision: {fileID: 2140273518}
-  collisionID: hydrant_Enemy

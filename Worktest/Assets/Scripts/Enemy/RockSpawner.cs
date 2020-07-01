@@ -17,6 +17,7 @@ public class RockSpawner : MonoBehaviour
     [SerializeField]
     bool DrawHint = true;
 
+    LevelDifficulty levelDiff;
 
     public Difficulty difficultySetting;
 
@@ -37,9 +38,23 @@ public class RockSpawner : MonoBehaviour
     Animator anim;
     private void Start()
     {
+        levelDiff = LevelDifficulty.Instance;
         anim = GetComponent<Animator>();
         bounceBoxTopY = bounceBoxCol.bounds.center.y + bounceBoxCol.bounds.size.y / 2;
         GeneratePool();
+        nextSpawnTime = UnityEngine.Random.Range(minTimeBetweenSpawns[levelDiff.Difficulty], maxTimeBetweenSpawns[levelDiff.Difficulty]);
+    }
+    private void Update()
+    {
+        if (nextSpawnTime <= 0)
+        {
+            anim.SetTrigger("Throw");
+            nextSpawnTime = UnityEngine.Random.Range(minTimeBetweenSpawns[levelDiff.Difficulty], maxTimeBetweenSpawns[levelDiff.Difficulty]);
+        }
+        else
+        {
+            nextSpawnTime -= Time.deltaTime;
+        }
     }
 
     private void GeneratePool()
@@ -69,24 +84,12 @@ public class RockSpawner : MonoBehaviour
         newRock.SetActive(true);
         return newRock.GetComponent<RockPhysics>();
     }
-
-    private void Update()
-    {
-        if(nextSpawnTime<= 0)
-        {
-            anim.SetTrigger("Throw");
-            nextSpawnTime = UnityEngine.Random.Range(minTimeBetweenSpawns[(int)GameManager.CurrentDificiulty], maxTimeBetweenSpawns[(int)GameManager.CurrentDificiulty]);
-        }
-        else
-        {
-            nextSpawnTime -= Time.deltaTime;
-        }
-    }
+    
     //this could use a pool, but the spawn ratio is too low
     public void SpawnRock()
     {
-        float angle = UnityEngine.Random.Range(minThrowAngle[(int)GameManager.CurrentDificiulty], maxThrowAngle[(int)GameManager.CurrentDificiulty]) *Mathf.Deg2Rad;
-        float strength = UnityEngine.Random.Range(minStrength[(int)GameManager.CurrentDificiulty], maxStrength[(int)GameManager.CurrentDificiulty]);
+        float angle = UnityEngine.Random.Range(minThrowAngle[levelDiff.Difficulty], maxThrowAngle[levelDiff.Difficulty]) *Mathf.Deg2Rad;
+        float strength = UnityEngine.Random.Range(minStrength[levelDiff.Difficulty], maxStrength[levelDiff.Difficulty]);
         //trigonometry, cos*hyp = adj = x , sen * hyp = opp = y
         Vector2 throwVector = new Vector2(Mathf.Cos(angle) * strength, Mathf.Sin(angle) * strength);
         RockPhysics rock = GetARock();
