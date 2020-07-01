@@ -702,11 +702,11 @@ MonoBehaviour:
   - 40
   - 50
   rocksToSpawnCoin:
-  - 2
+  - 1
   - 3
   - 4
   coinLifespan:
-  - 10
+  - 15
   - 8
   - 5
   coinMinDistanceToHero:
@@ -2358,7 +2358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a690fff029b66be4cb32f83d4a22abfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 1
+  difficulty: 0
 --- !u!4 &1520087678
 Transform:
   m_ObjectHideFlags: 0
