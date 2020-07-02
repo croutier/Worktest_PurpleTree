@@ -167,6 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06682ae2b22bd3a4ea61a4f19bd5fc54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smokePrefab: {fileID: 7986076544094108835, guid: f0f7f17382cb832489f7c27d63d83a85,
+    type: 3}
+  smokeOffset: 0.4
   topSpeed: 5
   inertia: 1
   inertiaAcceleration: 10
@@ -834,30 +837,30 @@ MonoBehaviour:
   goal: {fileID: 1416141840}
   bounceBoxCol: {fileID: 1024792005}
   DrawHint: 1
-  difficultySetting: 1
+  difficultySetting: 2
   minThrowAngle:
   - 54.226307
-  - 62.23404
+  - 52.021275
   - 38.907158
   maxThrowAngle:
   - 61.653774
-  - 67.57265
+  - 57.359818
   - 45.870407
   minStrength:
   - 8.423598
-  - 7.056093
-  - 6.2475824
+  - 7.497099
+  - 6.8723407
   maxStrength:
   - 10.187624
-  - 8.415859
-  - 8.709852
+  - 8.599615
+  - 8.599606
   minTimeBetweenSpawns:
-  - 8.582205
+  - 8.021276
   - 5.665377
   - 1
   maxTimeBetweenSpawns:
-  - 12.00387
-  - 8.5822
+  - 10.994199
+  - 8.077364
   - 3.1876192
 --- !u!1 &519420028
 GameObject:
@@ -2358,7 +2361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a690fff029b66be4cb32f83d4a22abfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 0
+  difficulty: 2
 --- !u!4 &1520087678
 Transform:
   m_ObjectHideFlags: 0
