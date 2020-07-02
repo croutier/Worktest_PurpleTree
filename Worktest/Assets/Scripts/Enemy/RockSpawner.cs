@@ -89,7 +89,6 @@ public class RockSpawner : MonoBehaviour
         return newRock.GetComponent<RockPhysics>();
     }
     
-    //this could use a pool, but the spawn ratio is too low
     public void SpawnRock()
     {
         float angle = UnityEngine.Random.Range(minThrowAngle[levelDiff.Difficulty], maxThrowAngle[levelDiff.Difficulty]) *Mathf.Deg2Rad;

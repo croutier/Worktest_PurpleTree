@@ -11,6 +11,11 @@ public class HeroMovementController : MonoBehaviour
         movingLeft,
         idle
     }
+    [SerializeField]
+    GameObject smokePrefab;
+    Smoke smoke;
+    [SerializeField]
+    float smokeOffset = 0.4f;
 
     [SerializeField] 
     float topSpeed = 10.0f;
@@ -37,13 +42,13 @@ public class HeroMovementController : MonoBehaviour
         CameraFollow.CameraBounds bounds = Camera.main.gameObject.GetComponent<CameraFollow>().Boundaries;
         rightLimit = bounds.right - moveLimitOffset;
         leftLimit = bounds.left + moveLimitOffset;
+        smoke = Instantiate(smokePrefab, transform).GetComponent<Smoke>();
     }
 
     void Update()
     {
         DetectTouch();
-        MoveLogic();
-        
+        MoveLogic();        
     }
 
     private void MoveLogic()
@@ -54,7 +59,7 @@ public class HeroMovementController : MonoBehaviour
             {
                 anim.SetBool("Moving", true);
                 anim.gameObject.GetComponent<SpriteRenderer>().flipX = false;
-                SpawnDust(-1);
+                SpawnSmoke(-1);
             }
             currentMoveState = MoveState.movingRight;
             if (inertia)
@@ -73,7 +78,7 @@ public class HeroMovementController : MonoBehaviour
             {
                 anim.SetBool("Moving", true);
                 anim.gameObject.GetComponent<SpriteRenderer>().flipX = true;
-                SpawnDust(1);
+                SpawnSmoke(1);
             }
             currentMoveState = MoveState.movingLeft;
             if (inertia)
@@ -107,9 +112,9 @@ public class HeroMovementController : MonoBehaviour
         Move();
     }
 
-    private void SpawnDust(int direction)
+    private void SpawnSmoke(int direction)
     {
-        //throw new NotImplementedException();
+        smoke.Spawn(smokeOffset * direction,(direction>0));
     }
 
     private void DetectTouch()
