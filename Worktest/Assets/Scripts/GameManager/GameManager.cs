@@ -19,9 +19,13 @@ public class GameManager : MonoBehaviour
     GameObject rockDisplay;
     [SerializeField]
     GameObject coinDisplay;
+    [SerializeField]
+    GameObject endScreen;
 
     [SerializeField]
     HeroMovementController heroRef;
+    [SerializeField]
+    RockSpawner enemyRef;
 
     LevelConfigs configs;
 
@@ -34,6 +38,8 @@ public class GameManager : MonoBehaviour
     int rockScore = 0;
     int coinScore = 0;
 
+    bool gameEnded = false;
+
     LevelDifficulty levelDiff;
     private void Start()
     {
@@ -45,16 +51,36 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        if (curentTime > 0)
+        if (!gameEnded)
         {
-            curentTime -= Time.deltaTime;
-            timeText.text = curentTime.ToString("00");
-        }
-        else
-        {
-            Debug.Log("End level");
-        }
+            if (curentTime > 0)
+            {
+                curentTime -= Time.deltaTime;
+                timeText.text = curentTime.ToString("00");
+            }
+            else
+            {
+                EndLevel();
+            }
+        }        
     }
+
+    private void EndLevel()
+    {
+        enemyRef.gameEnded = true;
+        heroRef.gameEnded = true;
+        gameEnded = true;
+
+        rockDisplay.SetActive(false);
+        coinDisplay.SetActive(false);
+        timeText.transform.parent.gameObject.SetActive(false);
+
+        endScreen.SetActive(true);
+        endScreen.GetComponent<EndLevelScreen>().SetScree(rockScore, coinScore);
+
+
+    }
+
     private void StartCoinPool()
     {
         coinContainer = new GameObject();

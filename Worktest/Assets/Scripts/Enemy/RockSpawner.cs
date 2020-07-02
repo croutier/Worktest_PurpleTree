@@ -25,6 +25,9 @@ public class RockSpawner : MonoBehaviour
     List<GameObject> rockPool;
     int poolSize = 5;
 
+    [HideInInspector]
+    public bool gameEnded;
+
     float bounceBoxTopY = 0.0f;
 
     public float[] minThrowAngle = new float[]{0, 0,0};    
@@ -35,6 +38,7 @@ public class RockSpawner : MonoBehaviour
     public float[] maxTimeBetweenSpawns = new float[] { 0, 0, 0 };
 
     float nextSpawnTime = 2.0f;
+    
 
     Animator anim;
     private void Start()
@@ -47,15 +51,19 @@ public class RockSpawner : MonoBehaviour
     }
     private void Update()
     {
-        if (nextSpawnTime <= 0)
+        if (!gameEnded)
         {
-            anim.SetTrigger("Throw");
-            nextSpawnTime = UnityEngine.Random.Range(minTimeBetweenSpawns[levelDiff.Difficulty], maxTimeBetweenSpawns[levelDiff.Difficulty]);
+            if (nextSpawnTime <= 0)
+            {
+                anim.SetTrigger("Throw");
+                nextSpawnTime = UnityEngine.Random.Range(minTimeBetweenSpawns[levelDiff.Difficulty], maxTimeBetweenSpawns[levelDiff.Difficulty]);
+            }
+            else
+            {
+                nextSpawnTime -= Time.deltaTime;
+            }
         }
-        else
-        {
-            nextSpawnTime -= Time.deltaTime;
-        }
+       
     }
 
     private void GeneratePool()

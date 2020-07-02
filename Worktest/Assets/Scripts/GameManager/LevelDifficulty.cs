@@ -28,4 +28,9 @@ public class LevelDifficulty : MonoBehaviour
         }
     }
 
+    public void SetDifficulty(Difficulty dif)
+    {
+        difficulty = dif;
+    }
+
 }

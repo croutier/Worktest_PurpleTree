@@ -33,7 +33,8 @@ public class HeroMovementController : MonoBehaviour
     float leftLimit = 0.0f;
     public float LeftLimit { get { return leftLimit; } }
     MoveState currentMoveState = MoveState.idle;
-
+    [HideInInspector]
+    public bool gameEnded;
     Animator anim;
     private void Start()
     {
@@ -47,9 +48,13 @@ public class HeroMovementController : MonoBehaviour
 
     void Update()
     {
-        DetectTouch();
-        MoveLogic();        
+        if (!gameEnded)
+        {
+            DetectTouch();
+            MoveLogic();
+        }      
     }
+    
 
     private void MoveLogic()
     {

@@ -38,25 +38,11 @@ public class RockPhysics : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        bool gointUp = false;
-        if (moveVector.y > 0)
-        {
-            gointUp = true;
-            if (moveVector.y < 0)
-            {
-                print(transform.position.y);
-            }
-        }
+    {        
         if (move)
         {
 
-            moveVector += gravity*Time.deltaTime * Vector2.down;
-            
-            if (moveVector.y < 0 && gointUp)
-            {
-                //print(transform.position.y);
-            }
+            moveVector += gravity*Time.deltaTime * Vector2.down;            
             CheckCollisions();
             transform.position = transform.position + (new Vector3(moveVector.x, moveVector.y, 0) * Time.deltaTime);
         }        

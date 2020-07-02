@@ -18,7 +18,7 @@ public class RockSpawnerEditor : Editor
         
         EditorGUILayout.LabelField("Min:", myScript.minThrowAngle[(int)myScript.difficultySetting].ToString("#.#") +"°");
         EditorGUILayout.LabelField("Max:", myScript.maxThrowAngle[(int)myScript.difficultySetting].ToString("#.#") + "°");
-        EditorGUILayout.MinMaxSlider(ref myScript.minThrowAngle[(int)myScript.difficultySetting], ref myScript.maxThrowAngle[(int)myScript.difficultySetting], 15.0f, 75.0f);
+        EditorGUILayout.MinMaxSlider(ref myScript.minThrowAngle[(int)myScript.difficultySetting], ref myScript.maxThrowAngle[(int)myScript.difficultySetting], 15.0f, 85.0f);
 
         EditorGUILayout.LabelField("Strength", style: customGUIStyle);
         EditorGUILayout.LabelField("Min:", myScript.minStrength[(int)myScript.difficultySetting].ToString("#.#"));
@@ -28,7 +28,7 @@ public class RockSpawnerEditor : Editor
         EditorGUILayout.LabelField("Time between spawns", style: customGUIStyle);
         EditorGUILayout.LabelField("Min:", myScript.minTimeBetweenSpawns[(int)myScript.difficultySetting].ToString("#.#") +" s");
         EditorGUILayout.LabelField("Max:", myScript.maxTimeBetweenSpawns[(int)myScript.difficultySetting].ToString("#.#") + " s");
-        EditorGUILayout.MinMaxSlider(ref myScript.minTimeBetweenSpawns[(int)myScript.difficultySetting], ref myScript.maxTimeBetweenSpawns[(int)myScript.difficultySetting], 1, 30);
+        EditorGUILayout.MinMaxSlider(ref myScript.minTimeBetweenSpawns[(int)myScript.difficultySetting], ref myScript.maxTimeBetweenSpawns[(int)myScript.difficultySetting], 1, 10);
 
         serializedObj.ApplyModifiedProperties();
     }
